@@ -1,5 +1,4 @@
 
-```markdown
 # Weather App
 
 This project is a Spring Boot application that provides weather information based on the user's IP address.
