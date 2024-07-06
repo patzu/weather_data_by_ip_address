@@ -64,28 +64,6 @@ http://localhost:8080/weather
 For debugging purposes, you can disable security by updating the `SecurityConfig` class. 
 Ensure to revert these changes after debugging to secure your endpoints.
 
-### Example Security Configuration
-
-```java
-package com.example.weatherapp.config;
-
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-
-@Configuration
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-            .authorizeRequests()
-            .antMatchers("/weather").permitAll()
-            .anyRequest().authenticated();
-    }
-}
-```
-
 ## Dependencies
 
 - Spring Boot
