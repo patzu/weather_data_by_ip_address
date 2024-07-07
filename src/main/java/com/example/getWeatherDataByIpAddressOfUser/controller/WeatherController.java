@@ -7,7 +7,8 @@ import com.example.getWeatherDataByIpAddressOfUser.service.IpService;
 import com.example.getWeatherDataByIpAddressOfUser.service.WeatherService;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,13 +17,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class WeatherController {
 
-    @Autowired
     private IpService ipService;
-
-    @Autowired
     private WeatherService weatherService;
 
+    public WeatherController(IpService ipService, WeatherService weatherService) {
+        this.ipService = ipService;
+        this.weatherService = weatherService;
+    }
+
+    private static final Logger logger = LoggerFactory.getLogger(WeatherController.class);
+
     @GetMapping("api/weather")
+
     public ResponseEntity<?> getWeather(HttpServletRequest request) {
         try {
 
@@ -50,7 +56,7 @@ public class WeatherController {
                     .build();
             return ResponseEntity.ok(weatherDto);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Error occurred while fetching data.", e);
             ErrorResponseDto errorResponseDto = ErrorResponseDto.builder().message("Internal server error.")
                     .detail(e.getMessage())
                     .build();
