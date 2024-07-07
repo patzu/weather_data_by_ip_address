@@ -8,8 +8,15 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class IpService {
 
-    private final RestTemplate restTemplate = new RestTemplate();
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final RestTemplate restTemplate;
+    private final ObjectMapper objectMapper;
+
+
+    public IpService(RestTemplate restTemplate, ObjectMapper objectMapper) {
+        this.restTemplate = restTemplate;
+        this.objectMapper = objectMapper;
+    }
+
 
     public String getIpAddress() throws Exception {
         String ipUrl = "https://api.ipify.org?format=json";

@@ -10,11 +10,18 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class WeatherService {
 
+    private final RestTemplate restTemplate;
+    private final ObjectMapper objectMapper;
+
+
+    public WeatherService(RestTemplate restTemplate, ObjectMapper objectMapper) {
+        this.restTemplate = restTemplate;
+        this.objectMapper = objectMapper;
+    }
+
     @Value("${openweathermap.api.key}")
     private String apiKey;
 
-    private final RestTemplate restTemplate = new RestTemplate();
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public JsonNode getWeather(double latitude, double longitude) throws JsonProcessingException {
         String weatherUrl = String.format(
