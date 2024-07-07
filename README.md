@@ -1,5 +1,5 @@
 
-# Weather App
+# Weather Insights by IP: A Spring Boot Application
 
 This project is a Spring Boot application that provides weather information based on the user's IP address.
 It fetches the user's IP address, determines their location, and then retrieves the weather data for that location using
@@ -7,7 +7,7 @@ the OpenWeather One Call API 3.0.
 
 ## Features
 
-- Fetches the user's IP address using the [ipify](https://www.ipify.org/) API.
+- Fetches the user's IP address using the client's HTTP request.
 - Determines the user's location using the [ipapi](https://ipapi.co/) service.
 - Retrieves current weather data for the user's location using the OpenWeather One Call API 3.0.
 - Handles errors and provides meaningful responses for common HTTP errors such as 401 (Unauthorized) and 404 (Not Found).
@@ -23,13 +23,13 @@ the OpenWeather One Call API 3.0.
 ### Clone the Repository
 
 ```bash
-git@github.com:patzu/weather_data_by_ip_address.git
+git clone git@github.com:patzu/weather_data_by_ip_address.git
 cd weather-app
 ```
 
 ### Configure API Keys
 
-Update the `application.properties` file located in `src/main/resources` with your OpenWeather API key:
+Update the `application.properties` file located in `src/main/resources` with your API keys:
 
 ```properties
 openweathermap.api.key=YOUR_ONE_CALL_API_KEY
@@ -47,7 +47,7 @@ mvn spring-boot:run
 You can test the endpoint using an HTTP client like Postman or the IntelliJ IDEA HTTP client. Make a GET request to the following URL:
 
 ```
-http://localhost:8080/weather
+http://localhost:8080/api/weather
 ```
 
 ## Project Structure
@@ -56,21 +56,19 @@ http://localhost:8080/weather
   - `WeatherController`: Handles HTTP requests and returns weather data.
 
 - **Service**
-  - `IpService`: Fetches the user's IP address and location.
+  - `IpService`: Fetches the user's location based on the IP address.
   - `WeatherService`: Retrieves weather data based on the user's location.
 
-## Security Configuration
+- **DTOs (Data Transfer Objects)**
+  - `WeatherDto`: Contains weather data to be sent in the response.
+  - `ErrorResponseDto`: Contains error details to be sent in the response.
 
-For debugging purposes, you can disable security by updating the `SecurityConfig` class. 
-Ensure to revert these changes after debugging to secure your endpoints.
 
 ## Dependencies
 
 - Spring Boot
 - Spring Web
-- Spring Security
-- Jackson Databind
-- RestTemplate
+- Lombok
 
 ## Error Handling
 
