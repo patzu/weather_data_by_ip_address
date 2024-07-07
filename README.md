@@ -63,18 +63,11 @@ http://localhost:8080/api/weather
   - `WeatherDto`: Contains weather data to be sent in the response.
   - `ErrorResponseDto`: Contains error details to be sent in the response.
 
-## Security Configuration
-
-For debugging purposes, you can disable security by updating the `SecurityConfig` class. 
-Ensure to revert these changes after debugging to secure your endpoints.
 
 ## Dependencies
 
 - Spring Boot
 - Spring Web
-- Spring Security
-- Jackson Databind
-- RestTemplate
 - Lombok
 
 ## Error Handling
