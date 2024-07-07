@@ -6,6 +6,7 @@ import com.example.getWeatherDataByIpAddressOfUser.model.WeatherDto;
 import com.example.getWeatherDataByIpAddressOfUser.service.IpService;
 import com.example.getWeatherDataByIpAddressOfUser.service.WeatherService;
 import com.fasterxml.jackson.databind.JsonNode;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,11 +23,13 @@ public class WeatherController {
     private WeatherService weatherService;
 
     @GetMapping("api/weather")
-    public ResponseEntity<?> getWeather() {
+    public ResponseEntity<?> getWeather(HttpServletRequest request) {
         try {
 
             // Get IP address
-            String ipAddress = ipService.getIpAddress();
+            // String ipAddress = ipService.getIpAddress();
+
+            String ipAddress = getClientIp(request);
 
             // Get location details
             JsonNode locationJson = ipService.getLocation(ipAddress);
@@ -53,5 +56,20 @@ public class WeatherController {
                     .build();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponseDto);
         }
+    }
+
+    private String getClientIp(HttpServletRequest request) {
+        String remoteAddr = "";
+
+        if (request != null) {
+            remoteAddr = request.getHeader("X-Forwarded-For");
+            if (remoteAddr == null || remoteAddr.isEmpty()) {
+                remoteAddr = request.getRemoteAddr();
+            } else {
+                // If there are multiple IP addresses in the X-Forwarded-For header, take the first one
+                remoteAddr = remoteAddr.split(",")[0];
+            }
+        }
+        return remoteAddr;
     }
 }
