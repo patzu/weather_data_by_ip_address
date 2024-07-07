@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class WeatherController {
 
-    private IpService ipService;
-    private WeatherService weatherService;
+    private final IpService ipService;
+    private final WeatherService weatherService;
 
     public WeatherController(IpService ipService, WeatherService weatherService) {
         this.ipService = ipService;
