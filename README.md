@@ -1,5 +1,5 @@
 
-# Weather App
+# Weather Insights by IP: A Spring Boot Application
 
 This project is a Spring Boot application that provides weather information based on the user's IP address.
 It fetches the user's IP address, determines their location, and then retrieves the weather data for that location using
