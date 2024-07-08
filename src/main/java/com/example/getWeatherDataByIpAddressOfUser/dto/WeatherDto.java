@@ -1,4 +1,4 @@
-package com.example.getWeatherDataByIpAddressOfUser.model;
+package com.example.getWeatherDataByIpAddressOfUser.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

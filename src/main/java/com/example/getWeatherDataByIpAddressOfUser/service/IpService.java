@@ -1,5 +1,7 @@
 package com.example.getWeatherDataByIpAddressOfUser.service;
 
+import com.example.getWeatherDataByIpAddressOfUser.exception.LocationFromIpException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
@@ -17,17 +19,15 @@ public class IpService {
         this.objectMapper = objectMapper;
     }
 
-
-    public String getIpAddress() throws Exception {
-        String ipUrl = "https://api.ipify.org?format=json";
-        String response = restTemplate.getForObject(ipUrl, String.class);
-        JsonNode jsonNode = objectMapper.readTree(response);
-        return jsonNode.get("ip").asText();
-    }
-
-    public JsonNode getLocation(String ipAddress) throws Exception {
-        String locationUrl = "https://ipapi.co/" + ipAddress + "/json/";
-        String response = restTemplate.getForObject(locationUrl, String.class);
-        return objectMapper.readTree(response);
+    public JsonNode getLocation(String ipAddress) {
+        try {
+            String locationUrl = "https://ipapi.co/" + ipAddress + "/json/";
+            String response = restTemplate.getForObject(locationUrl, String.class);
+            return objectMapper.readTree(response);
+        } catch (JsonProcessingException e) {
+            throw new LocationFromIpException("Error processing data for ip address " + ipAddress, e);
+        } catch (Exception e) {
+            throw new LocationFromIpException("Error fetching data for ip address " + ipAddress, e);
+        }
     }
 }
