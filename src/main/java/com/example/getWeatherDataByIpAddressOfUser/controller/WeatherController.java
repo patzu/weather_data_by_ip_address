@@ -38,10 +38,10 @@ public class WeatherController {
 
         // Get location details
         JsonNode locationJson = ipService.getLocation(ipAddress);
-        String city = locationJson.get("city").asText();
+        String city = locationJson.path("city").asText();
 
-        double latitude = locationJson.get("latitude").asDouble();
-        double longitude = locationJson.get("longitude").asDouble();
+        double latitude = locationJson.path("latitude").asDouble();
+        double longitude = locationJson.path("longitude").asDouble();
 
         // Get weather data
         JsonNode weatherJsonNode = weatherService.getWeather(latitude, longitude);
