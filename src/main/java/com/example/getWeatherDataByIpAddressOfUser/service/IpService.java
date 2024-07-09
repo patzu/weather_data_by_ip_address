@@ -24,10 +24,10 @@ public class IpService {
     }
 
     public JsonNode getLocation(String ipAddress) {
-        String locationUrl = "https://ipapi.co/" + ipAddress + "/json/";
+        String locationUrl = "https://ipapi.co/{ip}/json/";
         try {
             logger.info("Getting location from ip address {}", ipAddress);
-            String response = restTemplate.getForObject(locationUrl, String.class);
+            String response = restTemplate.getForObject(locationUrl, String.class, ipAddress);
             return objectMapper.readTree(response);
         } catch (JsonProcessingException e) {
             logger.error("Error processing data for ip address {}", ipAddress, e);
